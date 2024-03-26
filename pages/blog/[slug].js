@@ -1,5 +1,6 @@
 import { createClient } from "contentful";
-import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import Skeleton from "../../components/Skeleton";
 
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -34,13 +35,14 @@ export async function getStaticProps({ params }) {
 }
 
 export default function blogDetails({ post }) {
-  console.log(post)
-  const { feature, title, method} = post.fields
+  console.log(post);
+  if (!post) return <Skeleton />;
+  const { feature, title, method } = post.fields;
   return (
     <div>
       <div className="banner">
-        <img 
-          src={'https:' + feature.fields.file.url}
+        <img
+          src={"https:" + feature.fields.file.url}
           width={1000}
           height={500}
           alt="post-image"
@@ -49,11 +51,12 @@ export default function blogDetails({ post }) {
       </div>
       <div className="method">
         <h3>Method:</h3>
-        <div>{ documentToReactComponents(method)}</div>
+        <div>{documentToReactComponents(method)}</div>
       </div>
 
       <style jsx>{`
-        h2,h3 {
+        h2,
+        h3 {
           text-transform: uppercase;
         }
         .banner h2 {
@@ -65,7 +68,7 @@ export default function blogDetails({ post }) {
           top: -60px;
           left: -10px;
           transform: rotateZ(-1deg);
-          box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
+          box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.1);
         }
 
         img {
@@ -74,5 +77,5 @@ export default function blogDetails({ post }) {
         }
       `}</style>
     </div>
-  )
+  );
 }
