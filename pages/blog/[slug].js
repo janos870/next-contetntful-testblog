@@ -27,13 +27,12 @@ export async function getStaticProps({ params }) {
     content_type: "web3",
     "fields.slug": params.slug,
   });
-
-  if(!items.lenght) {
+  if (!items.length) {
     return {
       redirect: {
         destination: '/',
-        permament: false
-      }
+        permanent: false,
+      },
     }
   }
 
