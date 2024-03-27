@@ -28,6 +28,15 @@ export async function getStaticProps({ params }) {
     "fields.slug": params.slug,
   });
 
+  if(!items.lenght) {
+    return {
+      redirect: {
+        destination: '/',
+        permament: false
+      }
+    }
+  }
+
   return {
     props: { post: items[0] },
     revalidate: 1,
